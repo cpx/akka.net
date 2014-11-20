@@ -63,6 +63,7 @@ namespace Akka.Actor
         public bool HasMessages { get { return Mailbox.HasUnscheduledMessages; } }
         public int NumberOfMessages { get { return Mailbox.NumberOfMessages; } }
         internal bool ActorHasBeenCleared { get { return _actorHasBeenCleared; } }
+        internal static Props TerminatedProps { get { return terminatedProps; } }
 
         public void Init(bool sendSupervise, Func<Mailbox> createMailbox /*, MailboxType mailboxType*/) //TODO: switch from  Func<Mailbox> createMailbox to MailboxType mailboxType
         {
@@ -211,7 +212,7 @@ namespace Akka.Actor
         {
             if (!children.TryAdd(name, ActorRef.Reserved))
             {
-                throw new Exception("The name is already reserved: " + name);
+                throw new InvalidActorNameException(string.Format("Actor name [{0}] is not unique!", name));
             }
         }
 

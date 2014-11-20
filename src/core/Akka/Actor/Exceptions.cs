@@ -130,4 +130,9 @@ namespace Akka.Actor
         {            
         }
     }
+
+    public class InvalidActorNameException : AkkaException
+    {
+        public InvalidActorNameException(string message) : base(message) { }
+    }
 }
